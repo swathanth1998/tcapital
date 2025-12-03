@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCapital - Transformation. Capitalized.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            letter-spacing: -1px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #0066cc;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(0, 102, 204, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0, 102, 204, 0.1) 0%, transparent 50%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: -2px;
+        }
+        
+        .hero-content h1 strong {
+            font-weight: 700;
+            display: block;
+            margin-top: 0.5rem;
+        }
+        
+        .hero-tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.85;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid #0066cc;
+        }
+        
+        .cta-button:hover {
+            background: transparent;
+            border-color: white;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 5rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a2e;
+            font-weight: 300;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        /* About Section */
+        .about {
+            background: white;
+        }
+        
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .about-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        /* Services */
+        .services {
+            background: #f8f9fa;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #0066cc, #004c99);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a2e;
+            text-align: center;
+        }
+        
+        .service-card p {
+            color: #666;
+            text-align: center;
+        }
+        
+        /* Focus Areas */
+        .focus-areas {
+            background: #1a1a2e;
+            color: white;
+        }
+        
+        .focus-areas .section-title {
+            color: white;
+        }
+        
+        .focus-areas .section-subtitle {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .focus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .focus-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .focus-item:hover {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.05);
+        }
+        
+        .focus-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .focus-item p {
+            opacity: 0.85;
+            font-size: 0.95rem;
+        }
+        
+        /* Values Section */
+        .values {
+            background: white;
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .value-item {
+            text-align: center;
+        }
+        
+        .value-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #0066cc;
+            opacity: 0.2;
+            line-height: 1;
+        }
+        
+        .value-item h3 {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            color: #1a1a2e;
+        }
+        
+        .value-item p {
+            color: #666;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #0066cc 0%, #004c99 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 5%;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button-alt {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: white;
+            color: #0066cc;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid white;
+        }
+        
+        .cta-button-alt:hover {
+            background: transparent;
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        
+        footer p {
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-tagline {
+            font-style: italic;
+            opacity: 0.6;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .services-grid,
+            .focus-grid,
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">TCapital</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#focus">Focus</a></li>
+            <li><a href="#values">Our Approach</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Transformation.<br><strong>Capitalized.</strong></h1>
+            <p class="hero-tagline">Ignite Possibility. Scale Future.</p>
+            <p>We partner with visionary companies to unlock their full potential through strategic capital, operational expertise, and transformative growth strategies.</p>
+            <a href="#about" class="cta-button">Learn More</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2 class="section-title">Who We Are</h2>
+        <div class="about-content">
+            <p>TCapital is a growth-focused investment firm dedicated to partnering with innovative companies at critical inflection points. We provide not just capital, but strategic guidance and operational support to help businesses scale and transform their industries.</p>
+            <p>Our integrated approach combines deep industry expertise with hands-on partnership, enabling our portfolio companies to achieve sustainable growth and create lasting value.</p>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <h2 class="section-title">What We Do</h2>
+        <p class="section-subtitle">We provide comprehensive support to help companies ignite possibility and scale their future.</p>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💰</div>
+                <h3>Growth Capital</h3>
+                <p>Strategic investments in high-growth companies with proven business models ready to scale.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🎯</div>
+                <h3>Strategic Advisory</h3>
+                <p>Expert guidance on business strategy, market expansion, and operational optimization.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🤝</div>
+                <h3>Operational Support</h3>
+                <p>Hands-on assistance with talent acquisition, process improvement, and organizational scaling.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🌐</div>
+                <h3>Market Access</h3>
+                <p>Leveraging our network to open doors to new markets, customers, and strategic partnerships.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>Financial Planning</h3>
+                <p>Supporting long-term financial strategy and preparing companies for their next phase of growth.</p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-icon">🚀</div>
+                <h3>Exit Strategy</h3>
+                <p>Guiding companies through successful exits that maximize value for all stakeholders.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="focus" class="focus-areas">
+        <h2 class="section-title">Focus Areas</h2>
+        <p class="section-subtitle">We invest in sectors where innovation drives transformation.</p>
+        
+        <div class="focus-grid">
+            <div class="focus-item">
+                <h3>Technology</h3>
+                <p>Enterprise SaaS, AI/ML, and innovative software solutions</p>
+            </div>
+            
+            <div class="focus-item">
+                <h3>Financial Services</h3>
+                <p>FinTech, digital banking, and payment innovations</p>
+            </div>
+            
+            <div class="focus-item">
+                <h3>Healthcare</h3>
+                <p>Digital health, medical devices, and healthcare IT</p>
+            </div>
+            
+            <div class="focus-item">
+                <h3>Clean Energy</h3>
+                <p>Sustainable energy solutions and environmental technology</p>
+            </div>
+            
+            <div class="focus-item">
+                <h3>Consumer</h3>
+                <p>Direct-to-consumer brands and digital marketplaces</p>
+            </div>
+            
+            <div class="focus-item">
+                <h3>Infrastructure</h3>
+                <p>Modern infrastructure and logistics technology</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="values" class="values">
+        <h2 class="section-title">Our Approach</h2>
+        <p class="section-subtitle">We believe in building lasting partnerships based on trust, transparency, and shared success.</p>
+        
+        <div class="values-grid">
+            <div class="value-item">
+                <div class="value-number">01</div>
+                <h3>Partnership First</h3>
+                <p>We view ourselves as partners, not just investors. Your success is our success, and we're committed for the long term.</p>
+            </div>
+            
+            <div class="value-item">
+                <div class="value-number">02</div>
+                <h3>Hands-On Support</h3>
+                <p>We roll up our sleeves and work alongside management teams to tackle challenges and seize opportunities.</p>
+            </div>
+            
+            <div class="value-item">
+                <div class="value-number">03</div>
+                <h3>Value Creation</h3>
+                <p>We focus on sustainable growth strategies that create lasting value for companies, employees, and stakeholders.</p>
+            </div>
+            
+            <div class="value-item">
+                <div class="value-number">04</div>
+                <h3>Network Effect</h3>
+                <p>Our extensive network of industry experts, advisors, and partners accelerates growth and opens new opportunities.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <h2>Ready to Transform?</h2>
+        <p>Learn more about how we can help you ignite possibility and scale your future.</p>
+        <a href="mailto:contact@tcapital.com" class="cta-button-alt">Get in Touch</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 TCapital. All rights reserved.</p>
+        <p class="footer-tagline">Transformation. Capitalized.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animation for cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.service-card, .focus-item, .value-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                hero.style.opacity = 1 - (scrolled / window.innerHeight);
+            }
+        });
+    </script>
+</body>
+</html>

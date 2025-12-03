@@ -5,19 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TCapital | Transformation. Capitalized.</title>
     <style>
-        /* --- CSS VARIABLES (COLORFUL LIGHT THEME) --- */
+        /* --- CSS VARIABLES (ORANGE & BLUE THEME) --- */
         :root {
-            /* Main Background: Clean White */
+            /* Backgrounds */
             --bg-color: #ffffff;
+            --bg-secondary: #f0f4f8;   /* Very light cool blue-grey */
             
             /* Text Colors */
-            --text-main: #1a1a1a;      /* Almost black for readability */
-            --text-muted: #555555;     /* Darker grey for subtitles */
+            --text-main: #0f172a;      /* Deep Navy (Almost Black) */
+            --text-muted: #475569;     /* Slate Grey */
             
-            /* The "Colorful" Elements */
-            --accent-gradient: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); /* Blue to Purple */
-            --border-color: #e5e5e5;   /* Light grey borders */
+            /* The Accent Colors */
+            --blue-primary: #0044cc;   /* Strong Corporate Blue */
+            --orange-accent: #ff6b00;  /* Vibrant Orange */
             
+            /* Gradient: Orange to Blue */
+            --accent-gradient: linear-gradient(135deg, #ff6b00 0%, #0044cc 100%);
+            
+            --border-color: #e2e8f0;   
             --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
@@ -49,12 +54,13 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.9); /* Slight transparency */
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .logo img {
-            height: 40px; /* Adjust height to fit your logo */
+            height: 40px; 
             display: block;
         }
 
@@ -62,7 +68,8 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-weight: 600;
+            font-weight: 700;
+            color: var(--blue-primary);
             cursor: pointer;
         }
 
@@ -74,7 +81,8 @@
             justify-content: center;
             padding: 0 4rem;
             position: relative;
-            background: radial-gradient(circle at 90% 10%, #f3f4f6 0%, #ffffff 40%);
+            /* Subtle blue gradient background */
+            background: radial-gradient(circle at 80% 20%, #eef2ff 0%, #ffffff 50%);
         }
 
         .hero h1 {
@@ -84,7 +92,7 @@
             max-width: 900px;
             margin-bottom: 2rem;
             
-            /* Making the text colorful with a gradient */
+            /* Orange to Blue Text Gradient */
             background: var(--accent-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -105,7 +113,8 @@
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--text-muted);
+            color: var(--orange-accent); /* Orange arrow */
+            font-weight: bold;
         }
 
         /* --- PURPOSE SECTION --- */
@@ -121,10 +130,8 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            font-weight: bold;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            color: var(--orange-accent); /* Orange Headers */
         }
 
         .intro-text h2 {
@@ -157,26 +164,46 @@
             justify-content: space-between;
             background: white;
             transition: 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
         .grid-item:last-child { border-right: none; }
         
         .grid-item:hover { 
-            background: #f8fafc; /* Subtle light grey on hover */
+            background: #f8fbff; /* Very light blue tint on hover */
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 15px 30px rgba(0, 68, 204, 0.1); /* Blue shadow */
+        }
+
+        /* Add a small orange bar on hover */
+        .grid-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--orange-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+        
+        .grid-item:hover::before {
+            transform: scaleX(1);
         }
 
         .grid-number {
             font-size: 3rem;
             font-weight: 700;
-            color: #e5e5e5; /* Very light grey number */
+            color: #cbd5e1; /* Light grey number */
         }
 
         .grid-content h3 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
-            color: var(--text-main);
+            color: var(--blue-primary); /* Blue Titles */
         }
 
         .grid-content p {
@@ -190,7 +217,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            background-color: #f9f9f9;
+            background-color: var(--bg-secondary);
         }
 
         .footer-cta h2 {
@@ -201,8 +228,13 @@
 
         .footer-cta a {
             font-size: 1.5rem;
-            color: #2563eb; /* Blue link */
-            font-weight: 600;
+            color: var(--orange-accent); /* Orange Link */
+            font-weight: 700;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .footer-cta a:hover {
+            border-bottom: 2px solid var(--orange-accent);
         }
 
         .footer-links {
@@ -210,6 +242,10 @@
             gap: 2rem;
             font-size: 0.9rem;
             color: var(--text-muted);
+        }
+        
+        .footer-links a:hover {
+            color: var(--blue-primary);
         }
 
         /* --- RESPONSIVE --- */

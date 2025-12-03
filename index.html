@@ -15,16 +15,16 @@
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             line-height: 1.4;
-            /* Smooth color transition */
+            /* Smooth background color transition for the whole page */
             transition: background-color 1s ease, color 1s ease;
-            background-color: #000; /* Start dark for video */
+            background-color: #000; 
             color: #fff;
             overflow-x: hidden;
         }
 
         a { text-decoration: none; color: inherit; transition: 0.3s; }
 
-        /* --- HEADER (Fixed) --- */
+        /* --- HEADER --- */
         header {
             position: fixed;
             top: 0;
@@ -34,7 +34,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            mix-blend-mode: difference; /* Ensures visibility on all colors */
+            mix-blend-mode: difference; 
             color: white; 
         }
 
@@ -60,16 +60,15 @@
             flex-direction: column;
             justify-content: center;
             position: relative;
-            overflow: hidden;
         }
 
         /* --- SECTION 1: VIDEO HERO --- */
         .video-section {
             align-items: center;
             text-align: center;
+            overflow: hidden;
         }
 
-        /* Background Video Styling */
         .bg-video {
             position: absolute;
             top: 0;
@@ -78,27 +77,20 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            opacity: 0.6; /* Slight dim so logo pops */
+            opacity: 0.6; 
         }
 
-        /* Large Logo Pop-Up Animation */
         .hero-logo-container img {
-            width: 300px; /* Big logo for intro */
+            width: 300px; 
             max-width: 80vw;
-            opacity: 0; /* Start hidden */
+            opacity: 0; 
             animation: popUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-            animation-delay: 0.5s; /* Wait for video to start */
+            animation-delay: 0.5s; 
         }
 
         @keyframes popUp {
-            0% {
-                transform: scale(0.8) translateY(50px);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
+            0% { transform: scale(0.8) translateY(50px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
         }
 
         .scroll-hint {
@@ -116,22 +108,40 @@
             60% {transform: translateY(-5px);}
         }
 
-        /* --- SECTION 2: ORANGE (Typography) --- */
-        .intro-text h1 {
-            font-size: 7vw;
+        /* --- SECTION 2: ORANGE (HEADLINE) --- */
+        .headline-text h1 {
+            font-size: 8vw;
             line-height: 1;
             font-weight: 800;
-            letter-spacing: -2px;
-            max-width: 90%;
-            margin-bottom: 2rem;
-        }
-        .intro-text p {
-            font-size: 1.5rem;
-            max-width: 600px;
-            opacity: 0.9;
+            letter-spacing: -3px;
+            max-width: 100%;
         }
 
-        /* --- SECTION 3: BLUE (The Grid) --- */
+        /* --- SECTION 3: BLUE (PURPOSE) --- */
+        .purpose-text h2 {
+            font-size: 3.5rem; /* Big readable text */
+            line-height: 1.2;
+            max-width: 1200px;
+            margin-bottom: 2rem;
+            font-weight: 400; /* Lighter weight for elegance */
+        }
+        
+        .purpose-text p {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            max-width: 800px;
+        }
+
+        .section-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            opacity: 0.6;
+            font-weight: bold;
+        }
+
+        /* --- SECTION 4: BLUE (GRID) --- */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -150,26 +160,32 @@
             font-size: 4rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            opacity: 0.5;
+            opacity: 0.3;
         }
         .grid-content h3 { font-size: 2rem; margin-bottom: 1rem; }
-        
-        .section-title {
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 2rem;
-            opacity: 0.7;
+        .grid-content p { font-size: 1.1rem; opacity: 0.8; }
+
+        /* --- SECTION 5: FOOTER (BLENDED GRADIENT) --- */
+        .footer {
+            /* This gradient mixes your Orange (#ff6b00) and Blue (#0033a0) */
+            background: linear-gradient(135deg, #ff6b00 0%, #7c3aed 50%, #0033a0 100%);
+            /* We force the background here because gradients don't animate on 'body' well */
         }
 
-        /* --- SECTION 4: FOOTER --- */
-        .footer-cta h2 { font-size: 5vw; margin-bottom: 2rem; }
-        .footer-links { display: flex; gap: 2rem; opacity: 0.6; margin-top: 4rem; }
+        .footer-cta h2 { font-size: 6vw; margin-bottom: 2rem; }
+        .footer-links { display: flex; gap: 2rem; opacity: 0.8; margin-top: 4rem; }
+        
+        /* Make footer links stand out on the colorful bg */
+        .footer-cta a { 
+            border-bottom: 2px solid rgba(255,255,255,0.5); 
+        }
+        .footer-cta a:hover { border-color: #fff; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             header, section { padding: 2rem; }
-            .intro-text h1 { font-size: 14vw; }
+            .headline-text h1 { font-size: 14vw; }
+            .purpose-text h2 { font-size: 2rem; }
             .grid-container { grid-template-columns: 1fr; border: none;}
             .grid-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.3); }
         }
@@ -196,15 +212,22 @@
         <div class="scroll-hint">Scroll to Discover</div>
     </section>
 
-    <section class="intro-section" data-bg="#ff6b00" data-text="#ffffff">
-        <div class="intro-text">
+    <section class="headline-section" data-bg="#ff6b00" data-text="#ffffff">
+        <div class="headline-text">
             <h1>Transformation.<br>Capitalized.</h1>
-            <p>We unlock exponential value in businesses on the edge of hypergrowth. Specializing in AI, Healthcare & Finance.</p>
+        </div>
+    </section>
+
+    <section class="purpose-section" data-bg="#0033a0" data-text="#ffffff">
+        <div class="section-label">Our Purpose</div>
+        <div class="purpose-text">
+            <h2>We are a High Growth Management Company, purpose-built to unlock exponential value in businesses on the edge of hypergrowth.</h2>
+            <p>We partner with visionary founders to ignite possibility and scale the future.</p>
         </div>
     </section>
 
     <section class="grid-section" data-bg="#0033a0" data-text="#ffffff">
-        <div class="section-title">Our Ecosystem</div>
+        <div class="section-label">Our Ecosystem</div>
         
         <div class="grid-container">
             <div class="grid-item">
@@ -231,10 +254,10 @@
         </div>
     </section>
 
-    <section class="footer" data-bg="#0a0a0a" data-text="#ffffff">
+    <section class="footer" data-bg="#5b2f8c" data-text="#ffffff">
         <div class="footer-cta">
             <h2>Let's Talk.</h2>
-            <a href="mailto:info@tcapital.com" style="font-size: 2rem; border-bottom: 2px solid white;">Send Message →</a>
+            <a href="mailto:info@tcapital.com" style="font-size: 2rem;">Send Message →</a>
         </div>
         
         <div class="footer-links">
@@ -247,8 +270,8 @@
     <script>
         const sections = document.querySelectorAll('section');
         
-        // Threshold: change color when 40% of the section is visible
-        const options = { threshold: 0.4 };
+        // Threshold: 50% visibility triggers the color change
+        const options = { threshold: 0.5 };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {

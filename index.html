@@ -15,15 +15,16 @@
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             line-height: 1.4;
-            /* CRITICAL: This allows the background color to transition smoothly */
-            transition: background-color 0.8s ease, color 0.8s ease;
-            background-color: #ffffff; /* Starting color */
-            color: #111111;
+            /* Smooth color transition */
+            transition: background-color 1s ease, color 1s ease;
+            background-color: #000; /* Start dark for video */
+            color: #fff;
+            overflow-x: hidden;
         }
 
         a { text-decoration: none; color: inherit; transition: 0.3s; }
 
-        /* --- HEADER --- */
+        /* --- HEADER (Fixed) --- */
         header {
             position: fixed;
             top: 0;
@@ -33,14 +34,13 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            mix-blend-mode: difference; /* This makes the logo/menu visible on ANY background color */
+            mix-blend-mode: difference; /* Ensures visibility on all colors */
             color: white; 
         }
 
-        .logo img {
-            height: 40px; 
+        .logo-header img {
+            height: 30px; 
             display: block;
-            /* Filter ensures logo is always white so mix-blend-mode works */
             filter: grayscale(100%) brightness(1000%); 
         }
 
@@ -52,8 +52,7 @@
             cursor: pointer;
         }
 
-        /* --- SECTIONS --- */
-        /* Each section takes up at least the full screen height */
+        /* --- SECTIONS GENERAL --- */
         section {
             min-height: 100vh;
             padding: 4rem;
@@ -61,10 +60,64 @@
             flex-direction: column;
             justify-content: center;
             position: relative;
+            overflow: hidden;
         }
 
-        /* 1. HERO (White Theme) */
-        .hero h1 {
+        /* --- SECTION 1: VIDEO HERO --- */
+        .video-section {
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Background Video Styling */
+        .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.6; /* Slight dim so logo pops */
+        }
+
+        /* Large Logo Pop-Up Animation */
+        .hero-logo-container img {
+            width: 300px; /* Big logo for intro */
+            max-width: 80vw;
+            opacity: 0; /* Start hidden */
+            animation: popUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+            animation-delay: 0.5s; /* Wait for video to start */
+        }
+
+        @keyframes popUp {
+            0% {
+                transform: scale(0.8) translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* --- SECTION 2: ORANGE (Typography) --- */
+        .intro-text h1 {
             font-size: 7vw;
             line-height: 1;
             font-weight: 800;
@@ -72,28 +125,13 @@
             max-width: 90%;
             margin-bottom: 2rem;
         }
-
-        .hero p {
+        .intro-text p {
             font-size: 1.5rem;
             max-width: 600px;
-            opacity: 0.7;
+            opacity: 0.9;
         }
 
-        /* 2. PURPOSE (Blue Theme) */
-        .intro-text h2 {
-            font-size: 4rem;
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            max-width: 1200px;
-        }
-        .intro-text p {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            max-width: 800px;
-            margin-bottom: 1rem;
-        }
-
-        /* 3. GRID (Orange Theme) */
+        /* --- SECTION 3: BLUE (The Grid) --- */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -114,29 +152,24 @@
             margin-bottom: 1rem;
             opacity: 0.5;
         }
-
-        .grid-content h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        /* 4. FOOTER (Dark Theme) */
-        .footer-cta h2 {
-            font-size: 5vw;
+        .grid-content h3 { font-size: 2rem; margin-bottom: 1rem; }
+        
+        .section-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin-bottom: 2rem;
+            opacity: 0.7;
         }
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-            opacity: 0.6;
-            margin-top: 4rem;
-        }
+
+        /* --- SECTION 4: FOOTER --- */
+        .footer-cta h2 { font-size: 5vw; margin-bottom: 2rem; }
+        .footer-links { display: flex; gap: 2rem; opacity: 0.6; margin-top: 4rem; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             header, section { padding: 2rem; }
-            .hero h1 { font-size: 15vw; }
-            .intro-text h2 { font-size: 2.5rem; }
+            .intro-text h1 { font-size: 14vw; }
             .grid-container { grid-template-columns: 1fr; border: none;}
             .grid-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.3); }
         }
@@ -145,29 +178,33 @@
 <body>
 
     <header>
-        <div class="logo">
+        <div class="logo-header">
             <img src="logo.png" alt="T Capital">
         </div>
         <div class="nav-toggle">Menu</div>
     </header>
 
-    <section class="hero" data-bg="#ffffff" data-text="#000000">
-        <h1>Transformation.<br>Capitalized.</h1>
-        <p>We partner with visionary founders to ignite possibility and scale the future.</p>
+    <section class="video-section" data-bg="#000000" data-text="#ffffff">
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        
+        <div class="hero-logo-container">
+            <img src="logo.png" alt="T Capital">
+        </div>
+        
+        <div class="scroll-hint">Scroll to Discover</div>
     </section>
 
-    <section class="intro-section" data-bg="#0033a0" data-text="#ffffff">
+    <section class="intro-section" data-bg="#ff6b00" data-text="#ffffff">
         <div class="intro-text">
-            <h2>We unlock exponential value in businesses on the edge of hypergrowth.</h2>
-            <p>Specializing in AI, Healthcare & Finance.</p>
-            <p>Our unique model combines strategic foresight and category expertise.</p>
+            <h1>Transformation.<br>Capitalized.</h1>
+            <p>We unlock exponential value in businesses on the edge of hypergrowth. Specializing in AI, Healthcare & Finance.</p>
         </div>
     </section>
 
-    <section class="grid-section" data-bg="#ff6b00" data-text="#ffffff">
-        <div style="margin-bottom: 4rem;">
-            <h2 style="font-size: 3rem;">Our Ecosystem</h2>
-        </div>
+    <section class="grid-section" data-bg="#0033a0" data-text="#ffffff">
+        <div class="section-title">Our Ecosystem</div>
         
         <div class="grid-container">
             <div class="grid-item">
@@ -208,29 +245,23 @@
     </section>
 
     <script>
-        // identifying the sections
         const sections = document.querySelectorAll('section');
         
-        // options for the observer (change color when section is 50% visible)
-        const options = {
-            threshold: 0.5
-        };
+        // Threshold: change color when 40% of the section is visible
+        const options = { threshold: 0.4 };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Get colors from the HTML data attributes
                     const bgColor = entry.target.getAttribute('data-bg');
                     const textColor = entry.target.getAttribute('data-text');
                     
-                    // Apply to body
                     document.body.style.backgroundColor = bgColor;
                     document.body.style.color = textColor;
                 }
             });
         }, options);
 
-        // start watching
         sections.forEach(section => {
             observer.observe(section);
         });

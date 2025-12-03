@@ -5,23 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TCapital | Transformation. Capitalized.</title>
     <style>
-        /* --- CSS VARIABLES (VIBRANT GRADIENT THEME) --- */
-        :root {
-            /* THE BACKGROUND: Blue mixed with Orange */
-            --bg-gradient: linear-gradient(135deg, #0033a0 0%, #0055ff 50%, #ff6b00 100%);
-            
-            /* Text Colors (Must be white to sit on top of color) */
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.8); 
-            
-            /* Glass Effect for Cards */
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --glass-hover: rgba(255, 255, 255, 0.2);
-            
-            --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-
         /* --- GLOBAL RESET --- */
         * {
             margin: 0;
@@ -30,16 +13,15 @@
         }
 
         body {
-            background: var(--bg-gradient);
-            background-attachment: fixed; /* Keeps the gradient still while you scroll */
-            color: var(--text-main);
-            font-family: var(--font-main);
-            line-height: 1.6;
-            min-height: 100vh;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.4;
+            /* CRITICAL: This allows the background color to transition smoothly */
+            transition: background-color 0.8s ease, color 0.8s ease;
+            background-color: #ffffff; /* Starting color */
+            color: #111111;
         }
 
         a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; }
 
         /* --- HEADER --- */
         header {
@@ -51,18 +33,15 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            /* Glass Header */
-            background: rgba(0, 0, 0, 0.2); 
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border);
+            mix-blend-mode: difference; /* This makes the logo/menu visible on ANY background color */
+            color: white; 
         }
 
         .logo img {
             height: 40px; 
             display: block;
-            /* In case your logo is black text, this filter makes it white. 
-               Remove this line if your logo is already white/colored. */
-            filter: brightness(0) invert(1); 
+            /* Filter ensures logo is always white so mix-blend-mode works */
+            filter: grayscale(100%) brightness(1000%); 
         }
 
         .nav-toggle {
@@ -71,163 +50,95 @@
             letter-spacing: 1px;
             font-weight: 700;
             cursor: pointer;
-            border: 1px solid white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-        }
-        .nav-toggle:hover {
-            background: white;
-            color: #0033a0;
         }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh;
+        /* --- SECTIONS --- */
+        /* Each section takes up at least the full screen height */
+        section {
+            min-height: 100vh;
+            padding: 4rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 0 4rem;
             position: relative;
         }
 
+        /* 1. HERO (White Theme) */
         .hero h1 {
-            font-size: 6vw; 
-            line-height: 1.1;
+            font-size: 7vw;
+            line-height: 1;
             font-weight: 800;
-            max-width: 1000px;
+            letter-spacing: -2px;
+            max-width: 90%;
             margin-bottom: 2rem;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
         .hero p {
-            font-size: 1.4rem;
-            color: var(--text-muted);
-            max-width: 650px;
-            margin-bottom: 3rem;
-            font-weight: 400;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 4rem;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 1.5rem;
+            max-width: 600px;
             opacity: 0.7;
         }
 
-        /* --- PURPOSE SECTION --- */
-        .intro-section {
-            padding: 8rem 4rem;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 4rem;
-            border-top: 1px solid var(--glass-border);
-        }
-
-        .section-label {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 800;
-            color: #ffcc00; /* Bright yellow/orange for contrast */
-        }
-
+        /* 2. PURPOSE (Blue Theme) */
         .intro-text h2 {
-            font-size: 2.5rem;
+            font-size: 4rem;
+            line-height: 1.1;
             margin-bottom: 2rem;
-            line-height: 1.2;
+            max-width: 1200px;
+        }
+        .intro-text p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 800px;
+            margin-bottom: 1rem;
         }
 
-        /* --- THE GRID (FROSTED GLASS CARDS) --- */
-        .grid-section {
+        /* 3. GRID (Orange Theme) */
+        .grid-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); 
-            border-top: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--glass-border);
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            padding-top: 4rem;
         }
 
         .grid-item {
-            padding: 4rem;
-            border-right: 1px solid var(--glass-border);
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            
-            /* Glassmorphism Effect */
-            background: var(--glass-bg);
-            backdrop-filter: blur(5px);
-            transition: 0.3s;
+            padding: 2rem 0;
+            border-right: 1px solid rgba(255,255,255,0.3);
         }
-
         .grid-item:last-child { border-right: none; }
-        
-        .grid-item:hover { 
-            background: var(--glass-hover);
-            transform: translateY(-5px);
-        }
 
         .grid-number {
-            font-size: 3rem;
-            font-weight: 700;
-            opacity: 0.3;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            opacity: 0.5;
         }
 
         .grid-content h3 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
         }
 
-        .grid-content p {
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            padding: 6rem 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            background: rgba(0,0,0,0.2); /* Darker glass for footer */
-        }
-
+        /* 4. FOOTER (Dark Theme) */
         .footer-cta h2 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 5vw;
+            margin-bottom: 2rem;
         }
-
-        .footer-cta a {
-            font-size: 1.5rem;
-            border-bottom: 2px solid white;
-            padding-bottom: 5px;
-        }
-        
-        .footer-cta a:hover {
-            color: #ffcc00;
-            border-color: #ffcc00;
-        }
-
         .footer-links {
             display: flex;
             gap: 2rem;
-            font-size: 0.9rem;
-            color: var(--text-muted);
+            opacity: 0.6;
+            margin-top: 4rem;
         }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            header, .hero, .intro-section, .grid-item, footer {
-                padding: 2rem;
-            }
-            .hero h1 { font-size: 3rem; }
-            .intro-section { grid-template-columns: 1fr; }
-            .grid-section { grid-template-columns: 1fr; }
-            .grid-item { border-right: none; border-bottom: 1px solid var(--glass-border); }
-            footer { flex-direction: column; align-items: flex-start; gap: 3rem; }
+            header, section { padding: 2rem; }
+            .hero h1 { font-size: 15vw; }
+            .intro-text h2 { font-size: 2.5rem; }
+            .grid-container { grid-template-columns: 1fr; border: none;}
+            .grid-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.3); }
         }
     </style>
 </head>
@@ -240,51 +151,53 @@
         <div class="nav-toggle">Menu</div>
     </header>
 
-    <section class="hero">
+    <section class="hero" data-bg="#ffffff" data-text="#000000">
         <h1>Transformation.<br>Capitalized.</h1>
-        <p>We are a High Growth Management Company, built for the transformative potential of the modern economy. We partner with visionary founders to ignite possibility and scale the future.</p>
-        <div class="scroll-indicator">Scroll Down</div>
+        <p>We partner with visionary founders to ignite possibility and scale the future.</p>
     </section>
 
-    <section class="intro-section">
-        <div class="section-label">Our Purpose</div>
+    <section class="intro-section" data-bg="#0033a0" data-text="#ffffff">
         <div class="intro-text">
-            <h2>We are purpose-built to unlock exponential value in businesses on the edge of hypergrowth.</h2>
-            <p>We specialize in catalyzing growth for AI, Healthcare & Finance, where innovation is reshaping entire industries.</p>
-            <p>Our unique model combines strategic foresight and category expertise to identify, activate, and scale companies with massive Total Addressable Markets.</p>
+            <h2>We unlock exponential value in businesses on the edge of hypergrowth.</h2>
+            <p>Specializing in AI, Healthcare & Finance.</p>
+            <p>Our unique model combines strategic foresight and category expertise.</p>
         </div>
     </section>
 
-    <section class="grid-section">
-        <div class="grid-item">
-            <div class="grid-number">01</div>
-            <div class="grid-content">
-                <h3>Founders & Startups</h3>
-                <p>Shaping the future of their industries with breakthrough potential.</p>
-            </div>
+    <section class="grid-section" data-bg="#ff6b00" data-text="#ffffff">
+        <div style="margin-bottom: 4rem;">
+            <h2 style="font-size: 3rem;">Our Ecosystem</h2>
         </div>
-
-        <div class="grid-item">
-            <div class="grid-number">02</div>
-            <div class="grid-content">
-                <h3>Investors & Funds</h3>
-                <p>Seeking leverage and scale acceleration in high-growth markets.</p>
+        
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="grid-number">01</div>
+                <div class="grid-content">
+                    <h3>Founders</h3>
+                    <p>Shaping the future with breakthrough potential.</p>
+                </div>
             </div>
-        </div>
-
-        <div class="grid-item">
-            <div class="grid-number">03</div>
-            <div class="grid-content">
-                <h3>Mission-Driven Enterprises</h3>
-                <p>Building sustainable value with strong transformative capability.</p>
+            <div class="grid-item">
+                <div class="grid-number">02</div>
+                <div class="grid-content">
+                    <h3>Investors</h3>
+                    <p>Seeking scale acceleration in high-growth markets.</p>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="grid-number">03</div>
+                <div class="grid-content">
+                    <h3>Enterprises</h3>
+                    <p>Building sustainable value and transformative capability.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer>
+    <section class="footer" data-bg="#0a0a0a" data-text="#ffffff">
         <div class="footer-cta">
             <h2>Let's Talk.</h2>
-            <a href="mailto:info@tcapital.com">Send Message →</a>
+            <a href="mailto:info@tcapital.com" style="font-size: 2rem; border-bottom: 2px solid white;">Send Message →</a>
         </div>
         
         <div class="footer-links">
@@ -292,7 +205,36 @@
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Use</a>
         </div>
-    </footer>
+    </section>
+
+    <script>
+        // identifying the sections
+        const sections = document.querySelectorAll('section');
+        
+        // options for the observer (change color when section is 50% visible)
+        const options = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Get colors from the HTML data attributes
+                    const bgColor = entry.target.getAttribute('data-bg');
+                    const textColor = entry.target.getAttribute('data-text');
+                    
+                    // Apply to body
+                    document.body.style.backgroundColor = bgColor;
+                    document.body.style.color = textColor;
+                }
+            });
+        }, options);
+
+        // start watching
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 
 </body>
 </html>

@@ -12,10 +12,13 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth; /* Ensures the auto-scroll is smooth */
+        }
+
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             line-height: 1.4;
-            /* Smooth background color transition for the whole page */
             transition: background-color 1s ease, color 1s ease;
             background-color: #000; 
             color: #fff;
@@ -24,7 +27,7 @@
 
         a { text-decoration: none; color: inherit; transition: 0.3s; }
 
-        /* --- HEADER --- */
+        /* --- HEADER (Initially Hidden) --- */
         header {
             position: fixed;
             top: 0;
@@ -35,7 +38,18 @@
             align-items: center;
             z-index: 1000;
             mix-blend-mode: difference; 
-            color: white; 
+            color: white;
+            
+            /* Hidden state */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+
+        /* Class to show header */
+        header.visible {
+            opacity: 1;
+            pointer-events: all;
         }
 
         .logo-header img {
@@ -80,10 +94,12 @@
             opacity: 0.6; 
         }
 
+        /* Big Logo Animation */
         .hero-logo-container img {
             width: 300px; 
             max-width: 80vw;
             opacity: 0; 
+            /* Start the animation slightly after load */
             animation: popUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
             animation-delay: 0.5s; 
         }
@@ -91,21 +107,6 @@
         @keyframes popUp {
             0% { transform: scale(0.8) translateY(50px); opacity: 0; }
             100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
-
-        .scroll-hint {
-            position: absolute;
-            bottom: 2rem;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
         }
 
         /* --- SECTION 2: ORANGE (HEADLINE) --- */
@@ -119,11 +120,11 @@
 
         /* --- SECTION 3: BLUE (PURPOSE) --- */
         .purpose-text h2 {
-            font-size: 3.5rem; /* Big readable text */
+            font-size: 3.5rem; 
             line-height: 1.2;
             max-width: 1200px;
             margin-bottom: 2rem;
-            font-weight: 400; /* Lighter weight for elegance */
+            font-weight: 400; 
         }
         
         .purpose-text p {
@@ -167,15 +168,12 @@
 
         /* --- SECTION 5: FOOTER (BLENDED GRADIENT) --- */
         .footer {
-            /* This gradient mixes your Orange (#ff6b00) and Blue (#0033a0) */
             background: linear-gradient(135deg, #ff6b00 0%, #7c3aed 50%, #0033a0 100%);
-            /* We force the background here because gradients don't animate on 'body' well */
         }
 
         .footer-cta h2 { font-size: 6vw; margin-bottom: 2rem; }
         .footer-links { display: flex; gap: 2rem; opacity: 0.8; margin-top: 4rem; }
         
-        /* Make footer links stand out on the colorful bg */
         .footer-cta a { 
             border-bottom: 2px solid rgba(255,255,255,0.5); 
         }
@@ -193,31 +191,34 @@
 </head>
 <body>
 
-    <header>
+    <!-- Header (Hidden initially, appears on scroll) -->
+    <header id="main-header">
         <div class="logo-header">
             <img src="logo.png" alt="T Capital">
         </div>
         <div class="nav-toggle">Menu</div>
     </header>
 
-    <section class="video-section" data-bg="#000000" data-text="#ffffff">
+    <!-- SECTION 1: VIDEO HERO (Intro) -->
+    <section class="video-section" id="intro" data-bg="#000000" data-text="#ffffff">
         <video autoplay muted loop playsinline class="bg-video">
             <source src="video.mp4" type="video/mp4">
         </video>
         
         <div class="hero-logo-container">
+            <!-- Center Logo Animation -->
             <img src="logo.png" alt="T Capital">
         </div>
-        
-        <div class="scroll-hint">Scroll to Discover</div>
     </section>
 
-    <section class="headline-section" data-bg="#ff6b00" data-text="#ffffff">
+    <!-- SECTION 2: ORANGE (Headline) -->
+    <section class="headline-section" id="section-start" data-bg="#ff6b00" data-text="#ffffff">
         <div class="headline-text">
             <h1>Transformation.<br>Capitalized.</h1>
         </div>
     </section>
 
+    <!-- SECTION 3: BLUE (Our Purpose) -->
     <section class="purpose-section" data-bg="#0033a0" data-text="#ffffff">
         <div class="section-label">Our Purpose</div>
         <div class="purpose-text">
@@ -226,6 +227,7 @@
         </div>
     </section>
 
+    <!-- SECTION 4: BLUE (The Ecosystem) -->
     <section class="grid-section" data-bg="#0033a0" data-text="#ffffff">
         <div class="section-label">Our Ecosystem</div>
         
@@ -254,6 +256,7 @@
         </div>
     </section>
 
+    <!-- SECTION 5: FOOTER (Blended Gradient) -->
     <section class="footer" data-bg="#5b2f8c" data-text="#ffffff">
         <div class="footer-cta">
             <h2>Let's Talk.</h2>
@@ -267,10 +270,34 @@
         </div>
     </section>
 
+    <!-- JAVASCRIPT: Auto-Scroll + Color Transition + Header Toggle -->
     <script>
-        const sections = document.querySelectorAll('section');
+        // --- 1. Auto Scroll Logic ---
+        window.addEventListener('load', () => {
+            // Wait 3500ms (3.5s) for logo animation to finish, then scroll
+            setTimeout(() => {
+                const startSection = document.getElementById('section-start');
+                if (window.scrollY < 100) { // Only auto-scroll if user hasn't scrolled yet
+                    startSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 3500);
+        });
+
+        // --- 2. Header Visibility Logic ---
+        const header = document.getElementById('main-header');
         
-        // Threshold: 50% visibility triggers the color change
+        window.addEventListener('scroll', () => {
+            const triggerHeight = window.innerHeight * 0.8; // Show header after 80% of first screen
+            
+            if (window.scrollY > triggerHeight) {
+                header.classList.add('visible');
+            } else {
+                header.classList.remove('visible');
+            }
+        });
+
+        // --- 3. Color Transition Logic ---
+        const sections = document.querySelectorAll('section');
         const options = { threshold: 0.5 };
 
         const observer = new IntersectionObserver((entries) => {

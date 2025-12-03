@@ -99,9 +99,9 @@
             width: 300px; 
             max-width: 80vw;
             opacity: 0; 
-            /* Start the animation slightly after load */
+            /* Start the animation after 6 seconds */
             animation: popUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-            animation-delay: 0.5s; 
+            animation-delay: 6s; 
         }
 
         @keyframes popUp {
@@ -274,13 +274,13 @@
     <script>
         // --- 1. Auto Scroll Logic ---
         window.addEventListener('load', () => {
-            // Wait 3500ms (3.5s) for logo animation to finish, then scroll
+            // Wait 9000ms (9s) for video (6s) + logo animation (1.5s) + pause to finish
             setTimeout(() => {
                 const startSection = document.getElementById('section-start');
                 if (window.scrollY < 100) { // Only auto-scroll if user hasn't scrolled yet
                     startSection.scrollIntoView({ behavior: 'smooth' });
                 }
-            }, 3500);
+            }, 9000);
         });
 
         // --- 2. Header Visibility Logic ---

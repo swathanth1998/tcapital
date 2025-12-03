@@ -34,7 +34,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 2rem 4rem;
+            padding: 1.5rem 4rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -89,8 +89,8 @@
 
         /* --- SECTIONS GENERAL --- */
         section {
-            min-height: 100vh; /* Default full height */
-            padding: 6rem 4rem;
+            /* Removed min-height: 100vh to reduce empty space */
+            padding: 5rem 4rem; /* Reduced padding */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -114,7 +114,8 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
-            height: 100vh; /* Force full viewport height */
+            height: 100vh; /* Keep this full height for impact */
+            padding: 0;
         }
 
         .bg-video {
@@ -142,6 +143,11 @@
         }
 
         /* --- SECTION 2: HERO (ORANGE) --- */
+        /* This specific section might look better with a bit more breathing room than others */
+        #hero-content {
+            min-height: 80vh; 
+        }
+
         .headline-text h1 {
             font-size: 7vw;
             line-height: 1;
@@ -195,12 +201,12 @@
         .content-grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 2rem; /* Reduced gap */
         }
 
         .content-block h2 {
             font-size: 2.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             line-height: 1.1;
             color: #111;
         }
@@ -208,30 +214,29 @@
         .content-block p {
             font-size: 1.1rem;
             color: #555;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .list-items li {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
             color: #333;
             border-bottom: 1px solid #eee;
-            padding-bottom: 1rem;
+            padding-bottom: 0.8rem;
         }
 
         /* --- SECTOR GRID (3 Cols) --- */
         .sector-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 2rem;
+            gap: 1.5rem; /* Reduced gap */
+            margin-top: 1.5rem;
         }
 
         /* 3D POP EFFECT STYLES */
         .sector-card {
-            padding: 2rem;
+            padding: 1.5rem; /* Reduced padding */
             background: #f9f9f9;
-            /* Cubic bezier creates a "physics" feel to the movement */
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             border: 1px solid transparent;
             position: relative;
@@ -240,38 +245,36 @@
         
         .sector-card:hover {
             background: #fff;
-            /* Deep layered shadow creates the illusion of height */
             box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05);
-            /* Move UP (-15px) and GROW (1.03x) */
             transform: translateY(-15px) scale(1.03);
             border-color: rgba(0,0,0,0.05);
-            z-index: 2; /* Ensures it sits on top of other elements */
+            z-index: 2; 
         }
 
         .sector-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
             color: #111;
         }
-        .sector-card p { font-size: 1rem; color: #666; }
+        .sector-card p { font-size: 0.95rem; color: #666; }
 
         /* --- COMPANIES SECTION --- */
         .companies-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 4rem;
+            gap: 2rem; /* Reduced gap */
             align-items: center;
-            margin-top: 3rem;
+            margin-top: 2rem;
             text-align: center;
         }
 
         .company-logo-text {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
             color: #ccc;
             transition: 0.3s;
             cursor: pointer;
-            padding: 2rem;
+            padding: 1.5rem;
             border: 1px solid transparent;
         }
 
@@ -284,21 +287,21 @@
         .why-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 2rem;
         }
-        .why-item h4 { font-size: 1.3rem; margin-bottom: 0.5rem; color: #111; }
-        .why-item p { color: #666; }
+        .why-item h4 { font-size: 1.2rem; margin-bottom: 0.5rem; color: #111; }
+        .why-item p { color: #666; font-size: 1rem; }
 
         /* --- FOOTER / GET INVOLVED (BLACK) --- */
         .footer-cols {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 4rem;
-            margin-bottom: 6rem;
+            gap: 2rem;
+            margin-bottom: 4rem; /* Reduced */
         }
 
-        .footer-col h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; }
-        .footer-col p { color: #aaa; margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .footer-col h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: #fff; }
+        .footer-col p { color: #aaa; margin-bottom: 1.2rem; font-size: 0.9rem; }
         .footer-btn {
             color: #ff6b00;
             font-weight: bold;
@@ -310,7 +313,7 @@
 
         .footer-contact {
             border-top: 1px solid #333;
-            padding-top: 4rem;
+            padding-top: 3rem;
             display: flex;
             justify-content: space-between;
             color: #666;

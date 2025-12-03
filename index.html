@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCapital | Transformation. Capitalized.</title>
+    <title>T Capital | Accelerating the Future</title>
     <style>
         /* --- GLOBAL RESET --- */
         * {
@@ -13,21 +13,23 @@
         }
 
         html {
-            scroll-behavior: smooth; /* Ensures the auto-scroll is smooth */
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            line-height: 1.4;
-            transition: background-color 1s ease, color 1s ease;
+            line-height: 1.5;
+            transition: background-color 0.6s ease, color 0.6s ease;
             background-color: #000; 
             color: #fff;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
 
-        /* --- HEADER (Initially Hidden) --- */
+        /* --- HEADER (Links instead of Menu) --- */
         header {
             position: fixed;
             top: 0;
@@ -40,13 +42,11 @@
             mix-blend-mode: difference; 
             color: white;
             
-            /* Hidden state */
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.8s ease;
         }
 
-        /* Class to show header */
         header.visible {
             opacity: 1;
             pointer-events: all;
@@ -58,22 +58,55 @@
             filter: grayscale(100%) brightness(1000%); 
         }
 
-        .nav-toggle {
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 700;
-            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: white;
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         /* --- SECTIONS GENERAL --- */
         section {
-            min-height: 100vh;
-            padding: 4rem;
+            min-height: 100vh; /* Default full height */
+            padding: 6rem 4rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: relative;
+        }
+
+        /* --- ANIMATION UTILITIES --- */
+        .reveal-text {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .reveal-text.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* --- SECTION 1: VIDEO HERO --- */
@@ -81,6 +114,7 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
+            height: 100vh; /* Force full viewport height */
         }
 
         .bg-video {
@@ -94,12 +128,10 @@
             opacity: 0.6; 
         }
 
-        /* Big Logo Animation */
         .hero-logo-container img {
             width: 300px; 
             max-width: 80vw;
             opacity: 0; 
-            /* Start the animation after 6 seconds */
             animation: popUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
             animation-delay: 6s; 
         }
@@ -109,175 +141,397 @@
             100% { transform: scale(1) translateY(0); opacity: 1; }
         }
 
-        /* --- SECTION 2: ORANGE (HEADLINE) --- */
+        /* --- SECTION 2: HERO (ORANGE) --- */
         .headline-text h1 {
-            font-size: 8vw;
+            font-size: 7vw;
             line-height: 1;
             font-weight: 800;
-            letter-spacing: -3px;
-            max-width: 100%;
-        }
-
-        /* --- SECTION 3: BLUE (PURPOSE) --- */
-        .purpose-text h2 {
-            font-size: 3.5rem; 
-            line-height: 1.2;
-            max-width: 1200px;
+            letter-spacing: -2px;
+            max-width: 1100px;
             margin-bottom: 2rem;
-            font-weight: 400; 
         }
         
-        .purpose-text p {
-            font-size: 1.2rem;
-            opacity: 0.7;
+        .headline-sub {
+            font-size: 1.5rem;
             max-width: 800px;
+            margin-bottom: 3rem;
+            opacity: 0.9;
         }
 
-        .section-label {
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: white;
+            color: #ff6b00;
+        }
+
+        /* --- GENERIC CONTENT STYLES (WHITE BG) --- */
+        .section-label {
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 2rem;
-            opacity: 0.6;
             font-weight: bold;
+            color: #ff6b00; 
+            display: inline-block;
+            border-bottom: 2px solid #ff6b00;
+            padding-bottom: 5px;
         }
 
-        /* --- SECTION 4: BLUE (GRID) --- */
-        .grid-container {
+        .content-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .content-block h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: #111;
+        }
+        
+        .content-block p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .list-items li {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        /* --- SECTOR GRID (3 Cols) --- */
+        .sector-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.3);
-            padding-top: 4rem;
+            margin-top: 2rem;
         }
 
-        .grid-item {
-            padding: 2rem 0;
-            border-right: 1px solid rgba(255,255,255,0.3);
+        .sector-card {
+            padding: 2rem;
+            background: #f9f9f9;
+            transition: 0.3s;
         }
-        .grid-item:last-child { border-right: none; }
-
-        .grid-number {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            opacity: 0.3;
-        }
-        .grid-content h3 { font-size: 2rem; margin-bottom: 1rem; }
-        .grid-content p { font-size: 1.1rem; opacity: 0.8; }
-
-        /* --- SECTION 5: FOOTER (BLENDED GRADIENT) --- */
-        .footer {
-            background: linear-gradient(135deg, #ff6b00 0%, #7c3aed 50%, #0033a0 100%);
-        }
-
-        .footer-cta h2 { font-size: 6vw; margin-bottom: 2rem; }
-        .footer-links { display: flex; gap: 2rem; opacity: 0.8; margin-top: 4rem; }
         
-        .footer-cta a { 
-            border-bottom: 2px solid rgba(255,255,255,0.5); 
+        .sector-card:hover {
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
         }
-        .footer-cta a:hover { border-color: #fff; }
+
+        .sector-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #111;
+        }
+        .sector-card p { font-size: 1rem; color: #666; }
+
+        /* --- COMPANIES SECTION --- */
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .company-logo-text {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ccc;
+            transition: 0.3s;
+            cursor: pointer;
+            padding: 2rem;
+            border: 1px solid transparent;
+        }
+
+        .company-logo-text:hover {
+            color: #ff6b00;
+            border: 1px solid #eee;
+        }
+
+        /* --- WHY T CAPITAL GRID --- */
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+        .why-item h4 { font-size: 1.3rem; margin-bottom: 0.5rem; color: #111; }
+        .why-item p { color: #666; }
+
+        /* --- FOOTER / GET INVOLVED (BLACK) --- */
+        .footer-cols {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            margin-bottom: 6rem;
+        }
+
+        .footer-col h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; }
+        .footer-col p { color: #aaa; margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .footer-btn {
+            color: #ff6b00;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #ff6b00;
+        }
+
+        .footer-contact {
+            border-top: 1px solid #333;
+            padding-top: 4rem;
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.9rem;
+        }
 
         /* --- RESPONSIVE --- */
-        @media (max-width: 768px) {
-            header, section { padding: 2rem; }
-            .headline-text h1 { font-size: 14vw; }
-            .purpose-text h2 { font-size: 2rem; }
-            .grid-container { grid-template-columns: 1fr; border: none;}
-            .grid-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.3); }
+        @media (max-width: 900px) {
+            header { padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; }
+            .nav-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+            section { padding: 4rem 2rem; }
+            .headline-text h1 { font-size: 12vw; }
+            .hero-buttons { flex-direction: column; }
+            .content-grid-2, .sector-grid, .companies-grid, .why-grid, .footer-cols { 
+                grid-template-columns: 1fr; 
+                gap: 2rem;
+            }
+            .companies-grid { gap: 1rem; }
+            .company-logo-text { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header (Hidden initially, appears on scroll) -->
+    <!-- Header (Navigation) -->
     <header id="main-header">
         <div class="logo-header">
             <img src="logo.png" alt="T Capital">
         </div>
-        <div class="nav-toggle">Menu</div>
+        <nav class="nav-links">
+            <a href="#about">About</a>
+            <a href="#focus">Focus</a>
+            <a href="#model">Model</a>
+            <a href="#companies">Companies</a>
+            <a href="#contact">Contact</a>
+        </nav>
     </header>
 
-    <!-- SECTION 1: VIDEO HERO (Intro) -->
-    <section class="video-section" id="intro" data-bg="#000000" data-text="#ffffff">
+    <!-- 1. VIDEO INTRO -->
+    <section class="video-section" data-bg="#000000" data-text="#ffffff">
         <video autoplay muted loop playsinline class="bg-video">
             <source src="video.mp4" type="video/mp4">
         </video>
-        
         <div class="hero-logo-container">
-            <!-- Center Logo Animation -->
             <img src="logo.png" alt="T Capital">
         </div>
     </section>
 
-    <!-- SECTION 2: ORANGE (Headline) -->
-    <section class="headline-section" id="section-start" data-bg="#ff6b00" data-text="#ffffff">
-        <div class="headline-text">
-            <h1>Transformation.<br>Capitalized.</h1>
+    <!-- 2. HERO (Orange) -->
+    <section id="hero-content" data-bg="#ff6b00" data-text="#ffffff">
+        <div class="headline-text reveal-text">
+            <h1>Accelerating the Future of Industry.</h1>
+        </div>
+        <div class="headline-sub reveal-text" style="transition-delay: 0.1s;">
+            We invest in founders and companies poised to redefine what’s possible. As one of Florida’s largest and most experienced innovation-focused funds, we fuel category-shaping growth across AI, Healthcare, and Finance.
+        </div>
+        <div class="hero-buttons reveal-text" style="transition-delay: 0.2s;">
+            <div class="btn">Get in Touch</div>
+            <div class="btn">Pitch Your Company</div>
         </div>
     </section>
 
-    <!-- SECTION 3: BLUE (Our Purpose) -->
-    <section class="purpose-section" data-bg="#0033a0" data-text="#ffffff">
-        <div class="section-label">Our Purpose</div>
-        <div class="purpose-text">
-            <h2>We are a High Growth Management Company, purpose-built to unlock exponential value in businesses on the edge of hypergrowth.</h2>
-            <p>We partner with visionary founders to ignite possibility and scale the future.</p>
+    <!-- 3. ABOUT US (White) -->
+    <section id="about" data-bg="#ffffff" data-text="#111111">
+        <div class="section-label reveal-text">About Us</div>
+        <div class="content-grid-2">
+            <div class="content-block reveal-text">
+                <h2>Who We Are</h2>
+                <p>T Capital is a purpose-built investment platform created to unlock exponential value in businesses standing at the edge of hypergrowth. With decades of proven leadership in the Healthcare IT sector—and deep expertise across emerging technologies—we bring the insight, discipline, and network needed to scale companies into market-defining powerhouses.</p>
+            </div>
+            <div class="content-block reveal-text" style="transition-delay: 0.1s;">
+                <h2>Our Mission</h2>
+                <p>To identify, invest in, and accelerate the next generation of breakthrough companies shaping the future of their industries.</p>
+                <br>
+                <h3>Our Advantage</h3>
+                <ul class="list-items" style="margin-top: 1rem;">
+                    <li>One of the largest innovation-focused funds in Florida</li>
+                    <li>Led by operators with decades of domain experience</li>
+                    <li>Blend of capital, operational expertise, and strategic foresight</li>
+                    <li>Track record of scaling tech in markets with massive TAM</li>
+                </ul>
+            </div>
         </div>
     </section>
 
-    <!-- SECTION 4: BLUE (The Ecosystem) -->
-    <section class="grid-section" data-bg="#0033a0" data-text="#ffffff">
-        <div class="section-label">Our Ecosystem</div>
+    <!-- 4. WHO WE PARTNER WITH (White) -->
+    <section data-bg="#ffffff" data-text="#111111" style="border-top: 1px solid #eee;">
+        <div class="section-label reveal-text">Who We Partner With</div>
+        <div class="sector-grid">
+            <div class="sector-card reveal-text">
+                <h3>Founders & Startups</h3>
+                <p>Visionary entrepreneurs building transformative technologies and business models.</p>
+            </div>
+            <div class="sector-card reveal-text" style="transition-delay: 0.1s;">
+                <h3>Investors & Funds</h3>
+                <p>Capital partners seeking leverage, scale, and accelerated returns through deep category expertise.</p>
+            </div>
+            <div class="sector-card reveal-text" style="transition-delay: 0.2s;">
+                <h3>Mission-Driven Enterprises</h3>
+                <p>Organizations with strong breakthrough potential, ambitious teams, and a commitment to shaping the future.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. INVESTMENT FOCUS (White) -->
+    <section id="focus" data-bg="#ffffff" data-text="#111111" style="border-top: 1px solid #eee;">
+        <div class="section-label reveal-text">Our Investment Focus</div>
+        <p class="reveal-text" style="max-width: 600px; color: #555; margin-bottom: 3rem;">We specialize in catalyzing growth at the intersections of innovation, technology, and market disruption.</p>
         
-        <div class="grid-container">
-            <div class="grid-item">
-                <div class="grid-number">01</div>
-                <div class="grid-content">
-                    <h3>Founders</h3>
-                    <p>Shaping the future with breakthrough potential.</p>
-                </div>
+        <div class="sector-grid">
+            <div class="sector-card reveal-text">
+                <h3 style="color: #ff6b00;">Artificial Intelligence</h3>
+                <p>From automation to intelligent decision systems, we invest in AI solutions driving the next wave of global productivity and efficiency.</p>
             </div>
-            <div class="grid-item">
-                <div class="grid-number">02</div>
-                <div class="grid-content">
-                    <h3>Investors</h3>
-                    <p>Seeking scale acceleration in high-growth markets.</p>
-                </div>
+            <div class="sector-card reveal-text" style="transition-delay: 0.1s;">
+                <h3 style="color: #ff6b00;">Healthcare</h3>
+                <p>With decades of leadership in the Healthcare IT sector, we know what it takes to transform patient outcomes, streamline operations, and modernize systems at scale.</p>
             </div>
-            <div class="grid-item">
-                <div class="grid-number">03</div>
-                <div class="grid-content">
-                    <h3>Enterprises</h3>
-                    <p>Building sustainable value and transformative capability.</p>
-                </div>
+            <div class="sector-card reveal-text" style="transition-delay: 0.2s;">
+                <h3 style="color: #ff6b00;">Finance</h3>
+                <p>We support technologies and platforms reshaping financial access, infrastructure, and intelligence for tomorrow’s digital economy.</p>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 5: FOOTER (Blended Gradient) -->
-    <section class="footer" data-bg="#5b2f8c" data-text="#ffffff">
-        <div class="footer-cta">
-            <h2>Let's Talk.</h2>
-            <a href="mailto:info@tcapital.com" style="font-size: 2rem;">Send Message →</a>
+    <!-- 6. OUR MODEL (White) -->
+    <section id="model" data-bg="#f4f4f4" data-text="#111111">
+        <div class="section-label reveal-text">Our Model</div>
+        <div class="content-grid-2">
+            <div class="content-block reveal-text">
+                <h2>Value Activation</h2>
+                <p>We don’t just fund companies—we unlock their potential. Our value creation engine includes:</p>
+                <ul class="list-items">
+                    <li>Go-to-market acceleration</li>
+                    <li>Operational optimization</li>
+                    <li>Talent strategy and leadership advisory</li>
+                    <li>Strategic partnerships and ecosystem access</li>
+                </ul>
+            </div>
+            <div class="content-block reveal-text" style="transition-delay: 0.1s;">
+                <h3>Strategic Foresight</h3>
+                <p style="font-size: 0.95rem;">We anticipate category shifts early, identifying companies ready to break out and reshape the competitive landscape.</p>
+                
+                <h3>Category Expertise</h3>
+                <p style="font-size: 0.95rem;">Our leadership team consists of operators, technologists, and investors with deep experience scaling growth-stage companies.</p>
+                
+                <h3>Growth at TAM Scale</h3>
+                <p style="font-size: 0.95rem;">We target companies with massive, expanding Total Addressable Markets—where upside is exponential.</p>
+            </div>
         </div>
+    </section>
+
+    <!-- 7. COMPANIES (White) -->
+    <section id="companies" data-bg="#ffffff" data-text="#111111">
+        <div class="section-label reveal-text">Our Companies</div>
+        <div class="headline-sub reveal-text">A showcase of innovative startups and category leaders backed by T Capital.</div>
         
-        <div class="footer-links">
-            <span>© 2025 TCapital</span>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Use</a>
+        <div class="companies-grid">
+            <!-- Using styled text since we don't have images yet -->
+            <div class="company-logo-text reveal-text">GALVANON</div>
+            <div class="company-logo-text reveal-text" style="transition-delay: 0.1s;">HealthGrid</div>
+            <div class="company-logo-text reveal-text" style="transition-delay: 0.2s;">care.ai</div>
         </div>
     </section>
 
-    <!-- JAVASCRIPT: Auto-Scroll + Color Transition + Header Toggle -->
+    <!-- 8. WHY T CAPITAL (Light Grey) -->
+    <section data-bg="#ffffff" data-text="#111111" style="border-top: 1px solid #eee;">
+        <div class="section-label reveal-text">Why T Capital</div>
+        <div class="why-grid">
+            <div class="why-item reveal-text">
+                <h4>Operator-Led Expertise</h4>
+                <p>We’ve built and scaled companies ourselves—now we help others do the same.</p>
+            </div>
+            <div class="why-item reveal-text">
+                <h4>Deep Healthcare IT Roots</h4>
+                <p>Decades of leadership in one of the most complex, data-rich industries.</p>
+            </div>
+            <div class="why-item reveal-text">
+                <h4>A Florida Powerhouse</h4>
+                <p>One of the state’s largest and most active innovation investment funds.</p>
+            </div>
+            <div class="why-item reveal-text">
+                <h4>Aligned for Hypergrowth</h4>
+                <p>Everything we do is designed to help founders move faster, smarter, and bigger.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. FOOTER / CONTACT (Black) -->
+    <section id="contact" data-bg="#000000" data-text="#ffffff">
+        <div class="section-label reveal-text" style="color: white; border-color: white;">Get Involved</div>
+        
+        <div class="footer-cols">
+            <div class="footer-col reveal-text">
+                <h3>For Founders</h3>
+                <p>Build faster. Scale smarter. Break through barriers with T Capital behind you.</p>
+                <a href="#" class="footer-btn">Submit Your Pitch</a>
+            </div>
+            <div class="footer-col reveal-text" style="transition-delay: 0.1s;">
+                <h3>For Investors</h3>
+                <p>Partner with a fund engineered for exponential value creation.</p>
+                <a href="#" class="footer-btn">Become a Partner</a>
+            </div>
+            <div class="footer-col reveal-text" style="transition-delay: 0.2s;">
+                <h3>Strategic Partners</h3>
+                <p>Join an ecosystem pushing industries forward.</p>
+                <a href="#" class="footer-btn">Connect With Us</a>
+            </div>
+        </div>
+
+        <div class="footer-contact reveal-text">
+            <div>
+                <strong>T Capital</strong><br>
+                Investing in the next era of innovation.<br>
+                Florida, USA
+            </div>
+            <div style="text-align: right;">
+                <a href="mailto:info@tcapital.com">info@tcapital.com</a><br>
+                © 2025 T Capital
+            </div>
+        </div>
+    </section>
+
     <script>
         // --- 1. Auto Scroll Logic ---
         window.addEventListener('load', () => {
-            // Wait 9000ms (9s) for video (6s) + logo animation (1.5s) + pause to finish
+            // Wait 9s (6s delay + 1.5s anim + buffer)
             setTimeout(() => {
-                const startSection = document.getElementById('section-start');
-                if (window.scrollY < 100) { // Only auto-scroll if user hasn't scrolled yet
+                const startSection = document.getElementById('hero-content');
+                if (window.scrollY < 100) { 
                     startSection.scrollIntoView({ behavior: 'smooth' });
                 }
             }, 9000);
@@ -285,10 +539,8 @@
 
         // --- 2. Header Visibility Logic ---
         const header = document.getElementById('main-header');
-        
         window.addEventListener('scroll', () => {
-            const triggerHeight = window.innerHeight * 0.8; // Show header after 80% of first screen
-            
+            const triggerHeight = window.innerHeight * 0.8;
             if (window.scrollY > triggerHeight) {
                 header.classList.add('visible');
             } else {
@@ -296,24 +548,43 @@
             }
         });
 
-        // --- 3. Color Transition Logic ---
+        // --- 3. Color Transition & Text Reveal Logic ---
         const sections = document.querySelectorAll('section');
-        const options = { threshold: 0.5 };
+        const revealElements = document.querySelectorAll('.reveal-text');
+
+        const options = { threshold: 0.3 };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const bgColor = entry.target.getAttribute('data-bg');
-                    const textColor = entry.target.getAttribute('data-text');
+                    // Change Background Colors
+                    if(entry.target.tagName === 'SECTION') {
+                        const bgColor = entry.target.getAttribute('data-bg');
+                        const textColor = entry.target.getAttribute('data-text');
+                        document.body.style.backgroundColor = bgColor;
+                        document.body.style.color = textColor;
+                    }
+
+                    // Reveal Text Animation
+                    if(entry.target.classList.contains('reveal-text')) {
+                        entry.target.classList.add('active');
+                    }
                     
-                    document.body.style.backgroundColor = bgColor;
-                    document.body.style.color = textColor;
+                    // Trigger text reveals inside the section
+                    if(entry.target.tagName === 'SECTION') {
+                        const children = entry.target.querySelectorAll('.reveal-text');
+                        children.forEach(child => child.classList.add('active'));
+                    }
                 }
             });
         }, options);
 
         sections.forEach(section => {
             observer.observe(section);
+        });
+        
+        revealElements.forEach(el => {
+            observer.observe(el);
         });
     </script>
 

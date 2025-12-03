@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>T Capital | Accelerating the Future</title>
+    <!-- Importing Outfit (Gilroy alternative) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
     <style>
         /* --- GLOBAL RESET --- */
         * {
@@ -17,7 +22,8 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            /* Changed to Gilroy with Outfit as a fallback */
+            font-family: 'Gilroy', 'Outfit', sans-serif;
             line-height: 1.6;
             transition: background-color 0.6s ease, color 0.6s ease;
             background-color: #000; 
@@ -168,6 +174,7 @@
             max-width: 800px;
             margin-bottom: 3rem;
             opacity: 0.9;
+            font-weight: 300;
         }
 
         .hero-buttons {
@@ -245,7 +252,7 @@
             gap: 1.5rem;
         }
 
-        .modal-form input, .modal-form textarea {
+        .modal-form input, .modal-form textarea, .modal-form select {
             padding: 1rem;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -255,7 +262,7 @@
             width: 100%;
         }
 
-        .modal-form input:focus, .modal-form textarea:focus {
+        .modal-form input:focus, .modal-form textarea:focus, .modal-form select:focus {
             outline: 2px solid #ff6b00;
             background: #fff;
         }
@@ -281,7 +288,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 3rem;
-            font-weight: bold;
+            font-weight: 800;
             color: #ff6b00; 
             display: inline-block;
             border-bottom: 2px solid #ff6b00;
@@ -293,6 +300,7 @@
             margin-bottom: 1.5rem;
             line-height: 1.1;
             color: #111;
+            font-weight: 700;
         }
 
         .section-p {
@@ -302,6 +310,7 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            font-weight: 400;
         }
 
         /* --- ABOUT REORGANIZED --- */
@@ -323,6 +332,7 @@
             font-size: 1.1rem;
             color: #333;
             margin: 0;
+            font-weight: 500;
         }
 
         /* --- SECTOR & CARD GRIDS --- */
@@ -358,23 +368,40 @@
             font-size: 1.5rem;
             margin-bottom: 1rem;
             color: #111;
+            font-weight: 700;
         }
         .sector-card p { font-size: 1rem; color: #666; }
 
         /* --- COMPANIES SECTION --- */
-        .company-logo-text {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #ccc;
+        .company-logo-container {
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             transition: 0.3s;
             cursor: pointer;
-            padding: 2rem;
             border: 1px solid transparent;
         }
 
-        .company-logo-text:hover {
-            color: #ff6b00;
+        .company-logo-container:hover {
             border: 1px solid #eee;
+            background: #fafafa;
+        }
+
+        .company-logo-img {
+            max-width: 200px;
+            max-height: 80px;
+            width: auto;
+            height: auto;
+            /* Default: Grayscale and slightly faded */
+            filter: grayscale(100%) opacity(0.6);
+            transition: all 0.4s ease;
+        }
+
+        .company-logo-container:hover .company-logo-img {
+            /* Hover: Full color and opacity */
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.05);
         }
 
         /* --- WHY T CAPITAL GRID --- */
@@ -385,7 +412,7 @@
             max-width: 1000px;
         }
         
-        .why-item h4 { font-size: 1.4rem; margin-bottom: 0.5rem; color: #111; }
+        .why-item h4 { font-size: 1.4rem; margin-bottom: 0.5rem; color: #111; font-weight: 700; }
         .why-item p { color: #666; font-size: 1.1rem; }
 
         /* --- FOOTER CENTERED --- */
@@ -398,7 +425,7 @@
             max-width: 1200px;
         }
 
-        .footer-col h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; }
+        .footer-col h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; font-weight: 700; }
         .footer-col p { color: #aaa; margin-bottom: 1.5rem; font-size: 1rem; }
         .footer-btn {
             color: #ff6b00;
@@ -407,6 +434,12 @@
             font-size: 0.9rem;
             letter-spacing: 1px;
             border-bottom: 1px solid #ff6b00;
+            cursor: pointer;
+        }
+        
+        .footer-btn:hover {
+            color: #fff;
+            border-color: #fff;
         }
 
         .footer-contact {
@@ -470,7 +503,7 @@
             We invest in founders and companies poised to redefine what’s possible. As one of Florida’s largest and most experienced innovation-focused funds, we fuel category-shaping growth across AI, Healthcare, and Finance.
         </div>
         <div class="hero-buttons reveal-text" style="transition-delay: 0.2s;">
-            <div class="btn" onclick="openModal()">Get in Touch</div>
+            <div class="btn" onclick="openModal('contactModal')">Get in Touch</div>
         </div>
     </section>
 
@@ -578,15 +611,24 @@
         </div>
     </section>
 
-    <!-- 7. COMPANIES -->
+    <!-- 7. COMPANIES (With Image Logos) -->
     <section id="companies" data-bg="#ffffff" data-text="#111111">
         <div class="section-label reveal-text">Our Companies</div>
         <div class="headline-sub reveal-text" style="color: #555;">A showcase of innovative startups and category leaders backed by T Capital.</div>
         
         <div class="centered-grid">
-            <div class="company-logo-text reveal-text">GALVANON</div>
-            <div class="company-logo-text reveal-text" style="transition-delay: 0.1s;">HealthGrid</div>
-            <div class="company-logo-text reveal-text" style="transition-delay: 0.2s;">care.ai</div>
+            <!-- GALVANON -->
+            <div class="company-logo-container reveal-text">
+                <img src="galvanon.png" alt="Galvanon" class="company-logo-img">
+            </div>
+            <!-- HEALTHGRID -->
+            <div class="company-logo-container reveal-text" style="transition-delay: 0.1s;">
+                <img src="healthgrid.png" alt="HealthGrid" class="company-logo-img">
+            </div>
+            <!-- CARE.AI -->
+            <div class="company-logo-container reveal-text" style="transition-delay: 0.2s;">
+                <img src="careai.png" alt="care.ai" class="company-logo-img">
+            </div>
         </div>
     </section>
 
@@ -621,17 +663,17 @@
             <div class="footer-col reveal-text">
                 <h3>For Founders</h3>
                 <p>Build faster. Scale smarter. Break through barriers with T Capital behind you.</p>
-                <a href="#" class="footer-btn">Submit Your Pitch</a>
+                <div class="footer-btn" onclick="openModal('pitchModal')">Submit Your Pitch</div>
             </div>
             <div class="footer-col reveal-text" style="transition-delay: 0.1s;">
                 <h3>For Investors</h3>
                 <p>Partner with a fund engineered for exponential value creation.</p>
-                <a href="#" class="footer-btn">Become a Partner</a>
+                <div class="footer-btn" onclick="openModal('investorModal')">Become a Partner</div>
             </div>
             <div class="footer-col reveal-text" style="transition-delay: 0.2s;">
                 <h3>Strategic Partners</h3>
                 <p>Join an ecosystem pushing industries forward.</p>
-                <a href="#" class="footer-btn">Connect With Us</a>
+                <div class="footer-btn" onclick="openModal('contactModal')">Connect With Us</div>
             </div>
         </div>
 
@@ -651,7 +693,7 @@
     <!-- CONTACT MODAL -->
     <div id="contactModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="close-btn" onclick="closeModal('contactModal')">&times;</span>
             <h2 style="margin-bottom: 2rem; color: #111;">Get in Touch</h2>
             <form class="modal-form">
                 <input type="text" placeholder="Name" required>
@@ -659,6 +701,44 @@
                 <input type="text" placeholder="Company (Optional)">
                 <textarea placeholder="Message" rows="5" required></textarea>
                 <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PITCH MODAL -->
+    <div id="pitchModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('pitchModal')">&times;</span>
+            <h2 style="margin-bottom: 2rem; color: #111;">Submit Your Pitch</h2>
+            <form class="modal-form">
+                <input type="text" placeholder="Founder Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="text" placeholder="Startup Name" required>
+                <input type="text" placeholder="Website / LinkedIn" required>
+                <textarea placeholder="Elevator Pitch (or link to deck)" rows="5" required></textarea>
+                <button type="submit">Submit Pitch</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- INVESTOR MODAL -->
+    <div id="investorModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('investorModal')">&times;</span>
+            <h2 style="margin-bottom: 2rem; color: #111;">Become a Partner</h2>
+            <form class="modal-form">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="text" placeholder="Organization / Firm" required>
+                <select>
+                    <option value="" disabled selected>Investor Type</option>
+                    <option value="Angel">Angel Investor</option>
+                    <option value="VC">Venture Capital Firm</option>
+                    <option value="FamilyOffice">Family Office</option>
+                    <option value="Other">Other</option>
+                </select>
+                <textarea placeholder="Message / Inquiry" rows="4" required></textarea>
+                <button type="submit">Request Info</button>
             </form>
         </div>
     </div>
@@ -721,22 +801,28 @@
             observer.observe(el);
         });
 
-        // --- 4. Modal Logic ---
-        const modal = document.getElementById("contactModal");
-
-        function openModal() {
-            modal.style.display = "block";
-            document.body.style.overflow = "hidden"; 
+        // --- 4. Generic Modal Logic ---
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden"; 
+            }
         }
 
-        function closeModal() {
-            modal.style.display = "none";
-            document.body.style.overflow = "auto"; 
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto"; 
+            }
         }
 
+        // Close any modal if clicking outside
         window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+                document.body.style.overflow = "auto";
             }
         }
     </script>

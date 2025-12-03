@@ -5,28 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TCapital | Transformation. Capitalized.</title>
     <style>
-        /* --- CSS VARIABLES (ORANGE & BLUE THEME) --- */
+        /* --- CSS VARIABLES (VIBRANT GRADIENT THEME) --- */
         :root {
-            /* Backgrounds */
-            --bg-color: #ffffff;
-            --bg-secondary: #f0f4f8;   /* Very light cool blue-grey */
+            /* THE BACKGROUND: Blue mixed with Orange */
+            --bg-gradient: linear-gradient(135deg, #0033a0 0%, #0055ff 50%, #ff6b00 100%);
             
-            /* Text Colors */
-            --text-main: #0f172a;      /* Deep Navy (Almost Black) */
-            --text-muted: #475569;     /* Slate Grey */
+            /* Text Colors (Must be white to sit on top of color) */
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.8); 
             
-            /* The Accent Colors */
-            --blue-primary: #0044cc;   /* Strong Corporate Blue */
-            --orange-accent: #ff6b00;  /* Vibrant Orange */
+            /* Glass Effect for Cards */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-hover: rgba(255, 255, 255, 0.2);
             
-            /* Gradient: Orange to Blue */
-            --accent-gradient: linear-gradient(135deg, #ff6b00 0%, #0044cc 100%);
-            
-            --border-color: #e2e8f0;   
             --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
-        /* --- GLOBAL RESET & TYPOGRAPHY --- */
+        /* --- GLOBAL RESET --- */
         * {
             margin: 0;
             padding: 0;
@@ -34,11 +30,12 @@
         }
 
         body {
-            background-color: var(--bg-color);
+            background: var(--bg-gradient);
+            background-attachment: fixed; /* Keeps the gradient still while you scroll */
             color: var(--text-main);
             font-family: var(--font-main);
             line-height: 1.6;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
 
         a { text-decoration: none; color: inherit; transition: 0.3s; }
@@ -54,14 +51,18 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
+            /* Glass Header */
+            background: rgba(0, 0, 0, 0.2); 
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .logo img {
             height: 40px; 
             display: block;
+            /* In case your logo is black text, this filter makes it white. 
+               Remove this line if your logo is already white/colored. */
+            filter: brightness(0) invert(1); 
         }
 
         .nav-toggle {
@@ -69,8 +70,14 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 700;
-            color: var(--blue-primary);
             cursor: pointer;
+            border: 1px solid white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+        .nav-toggle:hover {
+            background: white;
+            color: #0033a0;
         }
 
         /* --- HERO SECTION --- */
@@ -81,29 +88,24 @@
             justify-content: center;
             padding: 0 4rem;
             position: relative;
-            /* Subtle blue gradient background */
-            background: radial-gradient(circle at 80% 20%, #eef2ff 0%, #ffffff 50%);
         }
 
         .hero h1 {
-            font-size: 5vw; 
+            font-size: 6vw; 
             line-height: 1.1;
             font-weight: 800;
-            max-width: 900px;
+            max-width: 1000px;
             margin-bottom: 2rem;
-            
-            /* Orange to Blue Text Gradient */
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: var(--text-muted);
-            max-width: 600px;
+            max-width: 650px;
             margin-bottom: 3rem;
             font-weight: 400;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .scroll-indicator {
@@ -113,8 +115,7 @@
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--orange-accent); /* Orange arrow */
-            font-weight: bold;
+            opacity: 0.7;
         }
 
         /* --- PURPOSE SECTION --- */
@@ -123,7 +124,7 @@
             display: grid;
             grid-template-columns: 1fr 2fr;
             gap: 4rem;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--glass-border);
         }
 
         .section-label {
@@ -131,79 +132,53 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-weight: 800;
-            color: var(--orange-accent); /* Orange Headers */
+            color: #ffcc00; /* Bright yellow/orange for contrast */
         }
 
         .intro-text h2 {
             font-size: 2.5rem;
             margin-bottom: 2rem;
             line-height: 1.2;
-            color: var(--text-main);
         }
 
-        .intro-text p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        /* --- THE GRID --- */
+        /* --- THE GRID (FROSTED GLASS CARDS) --- */
         .grid-section {
             display: grid;
             grid-template-columns: repeat(3, 1fr); 
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .grid-item {
             padding: 4rem;
-            border-right: 1px solid var(--border-color);
+            border-right: 1px solid var(--glass-border);
             min-height: 400px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: white;
+            
+            /* Glassmorphism Effect */
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
             transition: 0.3s;
-            position: relative;
-            overflow: hidden;
         }
 
         .grid-item:last-child { border-right: none; }
         
         .grid-item:hover { 
-            background: #f8fbff; /* Very light blue tint on hover */
+            background: var(--glass-hover);
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 68, 204, 0.1); /* Blue shadow */
-        }
-
-        /* Add a small orange bar on hover */
-        .grid-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--orange-accent);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-            transform-origin: left;
-        }
-        
-        .grid-item:hover::before {
-            transform: scaleX(1);
         }
 
         .grid-number {
             font-size: 3rem;
             font-weight: 700;
-            color: #cbd5e1; /* Light grey number */
+            opacity: 0.3;
         }
 
         .grid-content h3 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
-            color: var(--blue-primary); /* Blue Titles */
         }
 
         .grid-content p {
@@ -217,24 +192,23 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            background-color: var(--bg-secondary);
+            background: rgba(0,0,0,0.2); /* Darker glass for footer */
         }
 
         .footer-cta h2 {
             font-size: 3rem;
             margin-bottom: 1rem;
-            color: var(--text-main);
         }
 
         .footer-cta a {
             font-size: 1.5rem;
-            color: var(--orange-accent); /* Orange Link */
-            font-weight: 700;
-            border-bottom: 2px solid transparent;
+            border-bottom: 2px solid white;
+            padding-bottom: 5px;
         }
         
         .footer-cta a:hover {
-            border-bottom: 2px solid var(--orange-accent);
+            color: #ffcc00;
+            border-color: #ffcc00;
         }
 
         .footer-links {
@@ -242,10 +216,6 @@
             gap: 2rem;
             font-size: 0.9rem;
             color: var(--text-muted);
-        }
-        
-        .footer-links a:hover {
-            color: var(--blue-primary);
         }
 
         /* --- RESPONSIVE --- */
@@ -256,7 +226,7 @@
             .hero h1 { font-size: 3rem; }
             .intro-section { grid-template-columns: 1fr; }
             .grid-section { grid-template-columns: 1fr; }
-            .grid-item { border-right: none; border-bottom: 1px solid var(--border-color); }
+            .grid-item { border-right: none; border-bottom: 1px solid var(--glass-border); }
             footer { flex-direction: column; align-items: flex-start; gap: 3rem; }
         }
     </style>
